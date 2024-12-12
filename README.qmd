@@ -5,40 +5,36 @@ format: gfm
 
 ## Syllabus
 
-<https://qfcatmsu.github.io/MLE-Software/Syllabus/MLEsoft_syllabus.html>
+<https://qfcatmsu.github.io/MLE-RTMB/Syllabus/MLEsoft_syllabus.html>
 
-## Substantive changes post course offering period
+## Erratum
 
-<https://qfcatmsu.github.io/MLE-Software/erratum/erratum.html>
+Nothing here yet. Major fixes will be posted here (nothing yet)
 
 ## Lesson links
 
-Lesson 1 (12/12/2024): <https://qfcatmsu.github.io/MLE-Software/lesson1/MLE_lec1.html>\
+Lesson 1 (12/12/2024): <https://qfcatmsu.github.io/MLE-RTMB/lesson1/MLE_lec1.html>\
 
-Lesson 2 (12/12/2024): <https://qfcatmsu.github.io/MLE-Software/lesson2/MLE_lec2.html>\
+Lesson 2 (12/12/2024): <https://qfcatmsu.github.io/MLE-RTMB/lesson2/MLE_lec2.html>\
 
-Lesson 3 (12/12/2024): <https://qfcatmsu.github.io/MLE-Software/lesson3/MLE_lec3.html>\
+Lesson 3 (12/12/2024): <https://qfcatmsu.github.io/MLE-RTMB/lesson3/MLE_lec3.html>\
 
-Lesson 4
+Lesson 4\
 Not ready yet
 
-Lesson 5
+Lesson 5\
 Not ready yet
 
-Lesson 6
+Lesson 6\
 Not ready yet
 
-Evolving description of misc examples
+Evolving description of misc examples\
 Not ready yet
 
 ## Class Recordings
-
-Lectures recordings will be posted here: <https://mediaspace.msu.edu/channel/channelid/324238162>\
+<https://mediaspace.msu.edu/channel/channelid/363617322>\
 You will need to login with your MSU ID/ Guest Account
 
-## MSU Library link:
-<https://lib.msu.edu/>\
-
 ## Zoom link
-<https://msu.zoom.us/j/93746879660>
+<https://msu.zoom.us/s/93458228589>\
 The password is in an email sent to you
