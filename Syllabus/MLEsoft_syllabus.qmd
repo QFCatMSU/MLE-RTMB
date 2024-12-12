@@ -1,0 +1,159 @@
+---
+title: "Syllabus"
+subtitle: "Maximum Likelihood Estimation using RTMB)"
+date: 12/11/2024
+date-format: "D MMMM YYYY"
+author: Jim Bence
+format: 
+  html:
+    toc: true
+    number-sections: true
+editor: visual
+highlight-style: kate
+---
+
+## Course and Instructor Information
+
+### Instructors: Jim Bence and Chris Cahill
+
+-   Quantitative Fisheries Center, Michigan State University\
+-   Office Hours: By appointment (online)\
+-   E-mails: bence\@msu.edu, cahill11\@msu.edu
+
+### Class Times and Location:
+
+-   Tuesday-Thursday 9am - 4pm EST December 17-19. There will be a lunch break that is TBD.\
+-   All sessions in person (102 Urban Planning and Lanscape Architecture Building, MSU and virtual via Zoom using link information sent by email (if you need the link contact instructor).
+
+### Course Description
+
+The course reviews probability theory and concepts and covers applications of fitting models by maximum likelihood using Template Model Builder (TMB) through RTMB.  RTMB is an R package that allows you to use TMB, a modern software tool for fitting of nonlinear and non-normal statistical models. TMB is particularly useful for models with random effects, including state space models, and is increasingly being used in fishery stock assessments, spatial models, and fitting of other ecological models. Developing models in TMB requires some knowledge of C++, but by using RTMB you can use TMB without learning C++ coding, although you will need to do computer programming in R.  Our general expectation is you will have R and R-studio on your computer with the RTMB package installed. In general this should be straight-forward but if you run in to problems contact either the instructor or Charlie Belinsky (tech support).
+
+#### Technology requirements
+
+The course will be taught using R Studio, R, and RTMB.  The parts of TMB you need will be automatically installed when you install the RTMB package. This software is all freely available.
+
+### Recommended Texts & Other Readings
+
+References to cited materials will be provided in the course. While you can complete the course without doing outside readings, some of these will add detail and depth to what is covered in class.
+
+### Course Requirements
+
+Laptop with a broadband internet connection
+
+### Recommended Background
+
+There are no specific prerequisites but a college level statistics course and basic familiarity with R would be beneficial.
+
+### Course Structure and accessing class materials
+
+Material will be presented in lecture/demo format live and via zoom, with hands on working sessions (online participants will work in zoom breakout rooms. These zoom rooms will allow the instructor to simulate like checking in with a few students at a time as exercises are worked on. Because the course materials are publicly accessible, for security reasons the zoom link is not included here but is sent to enrolled students by email.
+
+The course material will be available through a public GitHub site:
+
+<https://github.com/QFCatMSU/MLE-Software>
+
+Lectures will be recorded and loaded to:
+
+<https://mediaspace.msu.edu/channel/channelid/324238162>
+
+To access the recordings you will need your MSU ID/Guest Account
+
+Prior to the course start you should have signed up for a guest ID for your email account. This is needed to allow you to access to the course media space (recording site).
+
+### Technical Assistance
+
+If you need technical assistance during the course or to report a problem you can:
+
+-   Contact Charlie at [belinsky\@msu.edu](mailto:belinsky@msu.edu) (QFC academic specialist)
+-   Visit the MSU IT Help & Support Site (<https://tech.msu.edu/support/help/>), call (517) 432-6200 or toll free (844) 678-6200, or email ithelp\@msu.edu. Note: MSU IT is available 24/7.
+-   Resource Center for Persons with Disabilities (RCPD)
+    -   To make an appointment with a specialist, contact (517) 353-9642 or TTY: (517) 355-1293
+    -   RCPD Get Started Info: <https://www.rcpd.msu.edu/get-started>
+
+## Course Objectives and Learning Outcomes
+
+The primary learning objectives for this course are: - Develop basic background on the theory of maximum likelihood estimation including underlying probability and treatment of random effects, learn how numerical searches operate to find maximum likelihood estimates, learn about different approaches for assessing uncertainty associated with parameter estimates and quantities calculated from them, learn about how TMB operates, learn how to structure and implement an estimation model in RTMB and assess uncertainty in estimates from the model.
+
+**Learning outcomes:**
+
+By successfully completing this course, you should be able to:
+
+-   fit nonlinear models in RTMB assuming a range of different univariate and multivariate probability distributions;
+
+-   fit models in RTMB that allow for random effects;
+
+-   be able to assess uncertainty using a variety of methods, and understand the strengths and weaknesses of the alternative approaches;
+
+-   understand the basic process of developing RTMB applications to arbitrarily complex alternative situations, although actually developing some such applications would require additional study (e.g., to learn about new probability distributions).\
+
+    You will meet the objectives listed above through a combination of the following activities in this course:
+
+<!-- -->
+
+-   attend all class sessions and participate in course activities;\
+
+-   come prepared for class sessions by reviewing prior materials and being ready with questions on areas of confusion.\
+
+Presentation materials and recordings of the lecture parts of class sessions will be made available to facilitate review. This is not a substitute for attending the interactive class sessions and students are expected to attend all sessions if at all possible and contact the instructor when a class cannot be attended.
+
+## Course Outline/Schedule
+
+Important Note: This is only a preliminary plan and will be adjusted based on presentation experience and input from students. Refer to the course GitHub page and review recordings to stay up to date on what is happening if you must miss a session.
+
+-   Session 1: Introduction (will be completed morning of day 1)
+    -   Introductions, statistical inference essentials, probability theory, what is maximum likelihood estimation.
+    -   Some basics of R for those who need it (loops, functions)
+    -   Hands on exercise in calculating the likelihood
+    -   The regression case (distinction of estimated and distributional parameters)
+    -   Ways of finding maximum likelihood estimates and basics of what RTMB does
+-   Session 2: First use of RTMB and Derivatives (will be completed day 1 (late morning/afternoon)
+    -   Walk through and modification of really simple RTMB program
+    -   Derivatives in more detail
+    -   Numerical searches and use of derivatives in searches and assessing uncertainty
+-   Session 2.
+    -   Theory and practice fitting a nonlinear regression using RTMB.
+    -   Asymptotic standard errors and profile confidence intervals.
+    -   Using distributions other than normal
+    -   Example nonlinear regression by RTMB and modifications
+-   Session 3.
+    -   Turning parameters off (not estimated) or on.
+    -   Bounds
+    -   More on uncertainty assessment in RTMB
+-   Session 3b.
+    -   Additional examples of fitting models with different distributions (how many depends on how things progress)
+-   Session 4.
+    -   Theory for random effects
+    -   Specifying random effects in RTMB
+    -   Worked example with a simple random effects
+-   Session 5.
+    -   Simulation in presence of random effects in RTMB
+    -   Hands on work doing a complete simulation study
+-   Session 6.
+    -   A state space example and its implementation in RTMB
+    -   The multivariate normal distribution and its implementation in RTMB
+-   Sessions 7 and 8 will focus more on hands on applications and increasing exposure to range of models. It is likely that sessions 1-6 will not each be completed in a day so its uncertain how much more material will be presented here.
+
+## Course Engagement and Evaluation
+
+This is a non-credit ungraded course. The instructors can provide certificates of completion for students who actively participate in the course, and cover all course material, on request. Students who do not attend all sessions (or make arrangements with instructor to make sure they learn that material), or who do not engage in exercises and demonstrate that they are learning the material will not be awarded certificates of completion.
+
+## Course Policies
+
+### Communication and Openness
+
+The coverage of materials will be adaptive and responsive to needs and input expressed by students. We can only do this effectively if you communicate what you understand and what needs more or different coverage. We also cannot cover additional topics of interest to you unless you let us know!
+
+### Diversity Equity and Inclusiveness
+
+Diversity, Equity and Inclusion are important, interdependent components of everyday life and are critical to our pursuit of academic excellence. Our aim is to foster a culture where every one feels valued, supported and inspired. This includes providing opportunity and access for all people across differences of race, age, color, ethnicity, gender, sexual orientation, gender identity, gender expression, religion, national origin, migratory status, disability / abilities, political affiliation, veteran status and socioeconomic background. This statement is adapted from the college statement within which the QFC sits (See the full college statement: <https://www.canr.msu.edu/news/canr-statement-on-diversity-equity-and-inclusion>)
+
+### Commit to Integrity: Academic Honesty
+
+Article 2.3.3 of the Academic Freedom Report states that "The student shares with the faculty the responsibility for maintaining the integrity of scholarship, grades, and professional standards." In addition, the Fisheries and Wildlife Department adheres to the policies on academic honesty as specified in General Student Regulations 1.0, Protection of Scholarship and Grades; the all-University Policy on Integrity of Scholarship and Grades; and Ordinance 17.00, Examinations. (See [Spartan Life: Student Handbook and Resource Guide](https://spartanexperiences.msu.edu/about/handbook/index.html).
+
+### Accommodations
+
+Inform Your Instructor of Any Accommodations Needed
+
+From the Resource Center for Persons with Disabilities (RCPD): Michigan State University is committed to providing equal opportunity for participation in all programs, services and activities. Requests for accommodations by persons with disabilities may be made by contacting the Resource Center for Persons with Disabilities at 517-884-RCPD or on the web at <http://rcpd.msu.edu>.

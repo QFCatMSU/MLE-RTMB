@@ -1,0 +1,327 @@
+---
+title: Software tools for Maximum Likelihood Estimation:MB
+title-slide-attributes:
+    data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
+    data-background-size: "40%"
+    data-background-position: "6% 95%"
+subtitle: Lesson 2 - first RTMB & Derivatives <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-Software/lesson2/MLE_lec2.html){style="position:absolute;top:40%lesson1;left:35%;font-size:20px;"}
+author: Jim Bence
+date: 11 December 2024
+date-format: "D MMMM YYYY"
+format: 
+  revealjs:
+    css: "https://qfcatmsu.github.io/css/presStyle.css"
+    slide-number: c/t  
+    theme: simple 
+highlight-style: kate
+---
+
+## Outline:
+
+-   Demos of using nlminb and RTMB to estimate parameters
+-   Explanation of what happened in RTMB
+-   Simple exercises adapting RTMB examples
+-   All that derivative stuff
+    -   derivatives, partial derivatives, second derivatives, cross derivatives (aka mixed second derivatives), gradient vector and Hessian
+-   Methods to calculate/approximate derivatives
+-   Exercise: finite difference derivatives
+-   How the Hessian and gradient vector are used
+-   RTMB Nonlinear regression vonb example
+
+## First Demos of RTMB
+
+-   Sneak turtle detection probability just using nlminb and using RTMB
+
+-   Mean and SD assuming normal distribution
+
+    -   Grid search - mainly to hint why not grid searches
+
+    -    Iterative parameter search using RTMB
+
+## "Magic" when we used MakeADFun in RTMB
+
+-   Converts your parameter list and NLL function into new inputs for nlminb (and lots of hidden stuff)
+
+    -   obj\$par: your parameter values as vector
+
+    -   obj\$fn: function pointing to memory location where NLL function result is stored
+
+    -   obj\$gr: function pointing to memory location where gradient stored
+
+-   IMPORTANT! obj\$fn and obj\$gr use hidden copy (created by MakeADFun) of any variables used in your NLL function
+
+## Exercise - change model to assume gamma rather than normal (in breakout groups)
+
+Hints
+
+-   Estimate logscale and logshape, where scale and shape are parameters of gamma distribution
+
+-   Use dgamma instead of dnorm or dbinom
+
+-   Starting values could be based on starting values for mean and variance. Use the following relationships
+
+    -   X\~gamma(shape,scale) then (from help(dgamma))
+
+        -   E(X)=shape\**scale V(X)=shape*\*scale\^2
+
+        -   scale=V(X)/E(X)
+
+        -   shape=E(X)/scale
+
+## What is a derivative
+
+![](images/tan%20line.png){fig-alt="Function with tangent line" width="395"}
+
+$$
+\frac{d f(\theta)}{d \theta}=\lim h \rightarrow 0   \frac{f(\theta+h)-f(\theta)}{h}
+$$
+
+## Partial derivative
+
+Function with multiple arguments but we treat all but one of them as constants, and calculate derivative with respect to just one! E.g.,
+
+$$
+\frac{\partial f}{\partial \theta_{2}}=\lim h \rightarrow 0 \frac{f\left(\theta_{1}, \theta_{2}+h, \theta_{3}\right)-f\left(\theta_{1}, \theta_{2}, \theta_{3}\right)}{h}
+$$
+
+## Second derivative
+
+Just a derivative of a derivative
+
+$$
+\frac{\partial^{2} f}{\partial \theta^{2}}=\frac{\partial \frac{\partial f}{\theta}}{\partial \theta}
+$$
+
+## Visualizing second derivatives
+
+![Concave function with negative second derivative](images/concave.png){width="503"}
+
+## Visualizing second derivatives
+
+![Convex function with positive second derivative](images/convex.png){width="503"}
+
+## Cross derivative (mixed second derivs)
+
+$$
+\frac{\partial^{2} f}{\partial \theta_{1} \partial \theta_{2}}=\frac{\partial \frac{\partial f}{\partial \theta_{1}}}{\partial \theta_{2}}
+$$
+
+An important and convenient fact:
+
+$$
+\frac{\partial^{2} f}{\partial \theta_{1} \partial \theta_{2}}=\frac{\partial^{2} f}{\partial \theta_{2} \partial \theta_{1}}
+$$
+
+## Methods for calculating derivatives
+
+-   Analytical derivatives. Gold standard but not available for many complex models.
+
+-   Finite difference methods. Intuitive but slow and propogate errors.
+
+-   Automatic differentiation. Fast and accurate but requires specialized software.
+
+## Finite difference derivatives
+
+Widely used, e.g., default of nlminb and Excel solver
+
+Forward difference
+
+$$
+\partial f / \partial \theta_{i}=\frac{f\left(\theta_{i}+h\right)-f\left(\theta_{i}\right)}{h}
+$$
+
+h is semi-arbitrary but small relative to $\theta_i$.
+
+Central differences
+
+$$
+\partial f / \partial \theta_{i}=\frac{f\left(\theta_{i}+h/2\right)-f\left(\theta_{i}-h/2\right)}{h}
+$$
+
+## Exercise - finite difference derivatives
+
+-   For g(X) = a + b X + sin X, use finite difference methods to calculate the derivative of g(X) with respect to (wrt) X
+    -   for X=1, with a=2 and b=0.5. Answer approximately 1.040.
+    -   Repeat for X=2, a=1, and b=1. Answer approximately 0.5839.
+-   For a=2, b=0.5, X=1, and same function, use finite differences to find the second derivative wrt X (answer approximately -0.8415)
+
+## Automatic differentiation
+
+-   Uses repeated applications of chain rule: $\partial z / \partial \theta=[\partial z / \partial y][\partial y / \partial \theta]$
+
+-   Simplest case. $y=f(\theta)$, $z=g(y)$, i.e., $z=g(f(\theta))$
+
+-   General case we care about:
+
+    $$
+    NLL=f_1(f_2(f_3(...f_k(\theta)...)))
+    $$
+
+## Gradient
+
+Just a fancy term to mean the vector of derivatives of the NLL function with respect to each parameters (so if k parameters, then k elements)
+
+$$
+g=\left\{\partial f / \partial \theta_{1}, \partial f / \partial \theta_{2}, \ldots \partial f / \partial \theta_{k}\right\}^{T}
+$$
+
+## Hessian - a square symmetric marix
+
+$$
+H=\left[\begin{array}{cccc}\partial^{2} f / \partial \theta_{1}^{2} & \partial^{2} f / \partial \theta_{1} \partial \theta_{2} & \ldots & \partial^{2} f / \partial \theta_{1} \partial \theta_{k} \\\partial^{2} f / \partial \theta_{2} \partial \theta_{1} & \partial^{2} f / \partial \theta_{2}^{2} & \ldots & \partial^{2} f / \partial \theta_{2} \partial \theta_{k} \\\ldots & \ldots & \ldots & \ldots \\\partial^{2} f / \partial \theta_{k} \partial \theta_{1} & \partial^{2} f / \partial \theta_{k} \partial \theta_{2} & \ldots & \partial^{2} f / \partial \theta_{k}^{2}\end{array}\right]
+$$
+
+$$
+h_{i,j}=h_{j,i}=\frac{\partial^{2} f}{\partial \theta_{i} \partial \theta_{j}}=\frac{\partial^{2} f}{\partial \theta_{j} \partial \theta_{i}}
+$$
+
+## If the NLL were a quadratic function as it would be for linear normal model...
+
+$$
+\theta_{\text {min }}=\theta_{\text {start }}+H^{-1} g
+$$
+
+where $H^{-1}$ in the matrix inverse of $H$ and $H^{-1}g$ is the product of the inverse of the Hessian and the gradient
+
+## Because our models generally not normal and linear, iterative searches...
+
+1.  specify starting values for parameters, $\underline{\theta_0}$
+
+2.  Replace $\underline{\theta_0}$ by $\underline{\theta_1}=\underline{\theta_0}+\delta_0$
+
+3.  Check gradient and Hessian and if at a minimum stop otherwise...
+
+4.  Return to step 2 but each time $\underline{\theta_{i+1}}=\underline{\theta_i}+\delta_i$
+
+Newton step: $\underline{\delta}_{i}=H^{-1} \mathrm{\underline{g}}$ evaluated at current params
+
+Quasi-Newton method uses $\underline{\delta}_{i}=\lambda H^{-1} \mathrm{\underline{g}}$ with Hessian approximated using search path, and $\lambda$ a number less than 1
+
+## Using the Hessian to calculate asymptotic standard errors
+
+-   First some reminders
+
+    -   Parameter estimates are random variates that result from estimators (random variables)
+
+    -   The variance describes the variability of results from applying the estimation method, namely the expected squared deviation between an estimate and its expected value
+
+    -   What we report as a standard error for a parameter is the square-root of this variance.
+
+## The variance-covariance matrix
+
+$$
+\Sigma=\begin{array}{cccc}\sigma_{1}^{2} & \sigma_{1,2} & \ldots & \sigma_{1, k} \\\sigma_{2, 1} & \sigma_{2}^{2} & \ldots & \sigma_{2, k} \\\ldots & \ldots & \ldots & \ldots \\\sigma_{k, 1} & \sigma_{k, 2} & \ldots & \sigma_{k}^{2}\end{array}
+$$
+
+## The asymptotic variance-covariance matrix
+
+$$
+\hat{\Sigma}=H^{-1}
+$$
+
+-   Square-root of diagonal gives standard errors
+
+-   Off-diagonals are covariances
+
+-   The Hessian needs to be positive definite for the calculation
+
+-   If the Hessian is not positive definite its a problem!
+
+-   Delta method used to obtain SEs for derived quantities (using $\hat{\Sigma}$)
+
+## Musky vonB example
+
+![musky_vonb.dat](images/muskie%20L%20vs%20A.png)
+
+## von Bertalanffy model
+
+![](images/vonBbasic.png){width="463"}
+
+$$
+\begin{array}{l}L_{i}=L_{\infty}\left(1-e^{-K\left(a_{i}-t_{0}\right)}\right)+\varepsilon_{i} \\\varepsilon_{i} \stackrel{i i d}{\sim} N\left(0, \sigma^{2}\right)\end{array}
+$$
+
+$$
+L_{i} \sim N\left(L_{a_{i}}, \sigma^{2}\right)
+$$
+
+## Influence of Linf
+
+![](images/vonBLinfVar.png)
+
+## Influence of K
+
+![](images/vonBKVar.png)
+
+## Musky vonB setup code
+
+```{r setup, include=FALSE, cache = FALSE}
+require("knitr") 
+## Sets the Working directory to be RStudio Project folder 
+## After this you can use the same file path in R script files and
+##      R within a Quarto document.  
+## This code is not outputted to the HTML or PDF documents.
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+```{R echo = T}
+library(RTMB);
+
+gmRdat = read.table("lesson2/data/musky_vonb.dat",head=T);
+
+#Set up the data and starting value of parameters for RTMB
+datlst = list(lenobs=gmRdat[,"Length"],age=gmRdat[,"Age"]);
+parlst = list(loglinf=7,logvbk=-1.6,t0=0,logsd=4);
+```
+
+## code for NLL for Musky vonb example
+
+```{R echo = T}
+f = function(parlst){
+  getAll(datlst,parlst);
+  linf = exp(loglinf);
+  vbk = exp(logvbk);
+  sd = exp(logsd);
+  lenpred = linf * (1 - exp(-vbk * (age - t0)));
+  atagepred = linf * (1 - exp(-vbk * ((1:11) - t0)))
+  REPORT(atagepred);
+  -sum(dnorm(lenobs, lenpred, sd, TRUE));
+}
+```
+
+## Create model object and print predicted lengths before fitting model
+
+```{R echo = T}
+obj = MakeADFun(f,parlst);
+
+GMreport=obj$report();
+GMreport
+```
+
+## fit the model
+
+```{R echo = T}
+fit = nlminb(obj$par, obj$fn, obj$gr);
+```
+
+## Get parameter uncertainties and convergence diagnostics
+
+```{R echo = T}
+sdr = sdreport(obj)
+sdr #summary(sdr)
+```
+
+## Predicted lengths at age after model fitting
+
+```{R echo = T}
+GMreport = obj$report();
+GMreport
+```
+
+## vonB Exercises
+
+-   Change REPORT(atagepred) to ADREPORT(atagepred) and look at sdreport and summary of the sdreport
+
+-   Calculate a new variable equal to vbk\*linf as ADREPORT
+
+-   If time: change the model so data are assumed gamma distributed (with expected value given by vonB equation and constant variance)
