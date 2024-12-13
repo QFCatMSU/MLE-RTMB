@@ -1,7 +1,7 @@
 ---
 title: "Syllabus"
 subtitle: "Maximum Likelihood Estimation using RTMB)"
-date: 12/11/2024
+date: 12/13/2024
 date-format: "D MMMM YYYY"
 author: Jim Bence
 format: 
@@ -17,13 +17,17 @@ highlight-style: kate
 ### Instructors: Jim Bence and Chris Cahill
 
 -   Quantitative Fisheries Center, Michigan State University\
+
 -   Office Hours: By appointment (online)\
+
 -   E-mails: bence\@msu.edu, cahill11\@msu.edu
+
+    You can contact instructors by email. Please include MLERTMB in subject.
 
 ### Class Times and Location:
 
 -   Tuesday-Thursday 9am - 4pm EST December 17-19. There will be a lunch break that is TBD.\
--   All sessions in person (102 Urban Planning and Lanscape Architecture Building, MSU and virtual via Zoom using link information sent by email (if you need the link contact instructor).
+-   All sessions in person (102 Urban Planning and Landscape Architecture Building, MSU. If needed there is a virtual option via Zoom using link information (and password) sent by email. The link but not password is on the github readme page. If you need the password contact instructors).
 
 ### Course Description
 
@@ -47,19 +51,19 @@ There are no specific prerequisites but a college level statistics course and ba
 
 ### Course Structure and accessing class materials
 
-Material will be presented in lecture/demo format live and via zoom, with hands on working sessions (online participants will work in zoom breakout rooms. These zoom rooms will allow the instructor to simulate like checking in with a few students at a time as exercises are worked on. Because the course materials are publicly accessible, for security reasons the zoom link is not included here but is sent to enrolled students by email.
+Material will be presented in lecture/demo format live and via zoom, with hands on working sessions (online participants will work in zoom breakout rooms). These zoom rooms will allow the instructor to simulate like checking in with a few students at a time as exercises are worked on. Because the course materials are publicly accessible, for security reasons the zoom link with password is not included here but is sent to enrolled students by email.
 
 The course material will be available through a public GitHub site:
 
-<https://github.com/QFCatMSU/MLE-Software>
+<https://github.com/QFCatMSU/MLE-RTMB>
 
 Lectures will be recorded and loaded to:
 
-<https://mediaspace.msu.edu/channel/channelid/324238162>
+<https://mediaspace.msu.edu/channel/channelid/363617322>
 
 To access the recordings you will need your MSU ID/Guest Account
 
-Prior to the course start you should have signed up for a guest ID for your email account. This is needed to allow you to access to the course media space (recording site).
+Prior to the course start you should have signed up for a guest ID for your email account at <https://tech.msu.edu/msu-guest-account/>. This is needed to allow you to access to the course media space (recording site).
 
 ### Technical Assistance
 
@@ -103,36 +107,42 @@ Important Note: This is only a preliminary plan and will be adjusted based on pr
 
 -   Session 1: Introduction (will be completed morning of day 1)
     -   Introductions, statistical inference essentials, probability theory, what is maximum likelihood estimation.
-    -   Some basics of R for those who need it (loops, functions)
+    -   We can cover some basics of R if needed (loops, functions)
     -   Hands on exercise in calculating the likelihood
-    -   The regression case (distinction of estimated and distributional parameters)
     -   Ways of finding maximum likelihood estimates and basics of what RTMB does
--   Session 2: First use of RTMB and Derivatives (will be completed day 1 (late morning/afternoon)
-    -   Walk through and modification of really simple RTMB program
+        -   Illustration of analytic and grid search using simple example
+    -   Using built in R probability density functions
+    -   The regression case (distinction of estimated and distributional parameters)
+-   Session 2: First use of RTMB and Derivatives (planned to be completed day 1 (late morning/afternoon)
+    -   Walk through of two really simple RTMB programs
+    -   Exercise to modify one of them (switch from normal to gamma)
     -   Derivatives in more detail
-    -   Numerical searches and use of derivatives in searches and assessing uncertainty
--   Session 2.
-    -   Theory and practice fitting a nonlinear regression using RTMB.
+    -   Numerical searches and use of derivatives in searches and in assessing uncertainty
+    -   Theory and practice of fitting a nonlinear regression using RTMB.
     -   Asymptotic standard errors and profile confidence intervals.
-    -   Using distributions other than normal
-    -   Example nonlinear regression by RTMB and modifications
--   Session 3.
+-   Session 3. Controlling searches and more on assessing uncertainty (planned for day 2)
+    -   Parameterization
     -   Turning parameters off (not estimated) or on.
     -   Bounds
     -   More on uncertainty assessment in RTMB
--   Session 3b.
-    -   Additional examples of fitting models with different distributions (how many depends on how things progress)
--   Session 4.
+        -   Likelihood ratio test and profile likelihood confidence interval
+        -   Simulation and parametric bootstrap
+-   Session 4. Basic random effects (planned for day 2)
     -   Theory for random effects
     -   Specifying random effects in RTMB
     -   Worked example with a simple random effects
--   Session 5.
     -   Simulation in presence of random effects in RTMB
-    -   Hands on work doing a complete simulation study
--   Session 6.
-    -   A state space example and its implementation in RTMB
-    -   The multivariate normal distribution and its implementation in RTMB
--   Sessions 7 and 8 will focus more on hands on applications and increasing exposure to range of models. It is likely that sessions 1-6 will not each be completed in a day so its uncertain how much more material will be presented here.
+-   Session 5. (planned for day 3)
+    -   Debugging concepts
+    -   styler()
+    -   browser()
+-   Session 6. More on random effects, model checking, and more examples (planned for day 3)
+    -   Overdispersion via random effects
+    -   What about REML?
+    -   Residuals
+    -   Is Laplace approximation working?
+    -   More examples time permitting
+    -   E.g., Multinomial distribution, Multivariate normal, correlated random effects
 
 ## Course Engagement and Evaluation
 
