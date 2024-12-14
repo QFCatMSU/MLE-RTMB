@@ -1,6 +1,8 @@
 # Simple test script for RTMB built to do many of the calculations 
 # described at: https://kaskr.r-universe.dev/articles/RTMB/RTMB-introduction.html
 
+library(RTMB)
+
 parameters <- list(
   mua=0,          ## Mean slope
   sda=1,          ## Std of slopes
