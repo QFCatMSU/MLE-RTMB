@@ -71,26 +71,16 @@ $$
 ![](images/tranformation%20flow.png)
 
 ## For similar quantities
-
 -   E.g., catchability for different survey gears, or year or location effects
-
 -   One approach: base and offsets
-
-    -   Define one level (gear, year, location) as base estimate offsets for
-        others. Formal parameters are the base and offsets
-
-        -   Two gears: estimate logqgill and offtrap, where logqgill is the
-            log-scale gill net catchability. In your NLL function calculate
-            logqtrap=logqgill+offset
-
-        -   for year-effects, estimate YE0, offsets for the nyears-1 other
+    -   Estimate base level (gear, year, location) and offsets
+        -   Two gears: estimate logqgill and offtrap, logqgill is the
+            log-scale gill net catchability. logqtrap=logqgill+offset
+        -   for year-effects, estimate YE0, offsets for nyears-1 other
             years. Then YE\[1\]=YE0, and (i\>1) YE\[i\]=YE_0+offset\[i-1\]
-
--   Alternative approach is through mean and deviations
-    from mean
-
-    -   Slightly more tricky as for n levels you can estimate the mean and n-1
-        deviations. The level left out can be calculated from these also.
+-   Alternative is estimate mean and deviations from mean
+    -   Trickier because for n levels you can estimate the mean and n-1
+        deviations. The last deviation  is calculated.
 
 ## Forcing parameter order
 
@@ -142,11 +132,8 @@ sel
 ## Bounds
 
 -   You specify these as vectors for lower and upper bounds
-
 -   These are passed to nlminb (so not part of RTMB)
-
 -   Behavior is different than in admb (bound pars will be failed convergence)
-
 -   Code squib
 
     #create upper and lower bounds
@@ -160,7 +147,6 @@ sel
 ## Fixing (not estimating) a parameter
 
 -   We fix parameters using maps
-
 -   You create a map as a named list where parameters you want to fix are
     included as factors set to missing values
 
@@ -339,3 +325,10 @@ RTMB::MakeADFun(...);
 
 -   I will demo doing one simulation, outline the full simulation procedure, then
     turn you loose on it.
+
+## Passing RTMB data 
+
+- MakeADFun expects a function with one argument (named parameter list)
+- It would be nice if we could make both the data and parameters arguments
+- There is way around this  - MakeADFun interprets function of function 
+- See: musky_vonb_closure.R

@@ -1,12 +1,12 @@
 ---
-title: Software tools for Maximum Likelihood Estimation:MB
+title: Software tools for Maximum Likelihood Estimation
 title-slide-attributes:
     data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
     data-background-size: "40%"
     data-background-position: "6% 95%"
 subtitle: Lesson 2 - first RTMB & Derivatives <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-Software/lesson2/MLE_lec2.html){style="position:absolute;top:40%lesson1;left:35%;font-size:20px;"}
 author: Jim Bence
-date: 11 December 2024
+date: 16 December 2024
 date-format: "D MMMM YYYY"
 format: 
   revealjs:
@@ -36,7 +36,7 @@ highlight-style: kate
 
     -   Grid search - mainly to hint why not grid searches
 
-    -    Iterative parameter search using RTMB
+    -   Iterative parameter search using RTMB
 
 ## "Magic" when we used MakeADFun in RTMB
 
@@ -53,19 +53,12 @@ highlight-style: kate
 ## Exercise - change model to assume gamma rather than normal (in breakout groups)
 
 Hints
-
 -   Estimate logscale and logshape, where scale and shape are parameters of gamma distribution
-
 -   Use dgamma instead of dnorm or dbinom
-
 -   Starting values could be based on starting values for mean and variance. Use the following relationships
-
     -   X\~gamma(shape,scale) then (from help(dgamma))
-
         -   E(X)=shape\**scale V(X)=shape*\*scale\^2
-
         -   scale=V(X)/E(X)
-
         -   shape=E(X)/scale
 
 ## What is a derivative
@@ -325,3 +318,17 @@ GMreport
 -   Calculate a new variable equal to vbk\*linf as ADREPORT
 
 -   If time: change the model so data are assumed gamma distributed (with expected value given by vonB equation and constant variance)
+
+## Probalistic notation
+
+-   You can use notation that looks more like other package model statements
+
+-   E.g.,
+
+    x %\~% dnorm(0,1) #Add the neg log of N(0,1) density for x to fn return
+
+-   See probnotation.R in lesson 2 R folder
+
+-   Positives: automatically uses log and gets sign right
+
+-   Makes it a bit harder to test bits of your function

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="MLE_lec3_files/libs/clipboard/clipboard.min.js"></script>
-<script src="MLE_lec3_files/libs/quarto-html/tabby.min.js"></script>
-<script src="MLE_lec3_files/libs/quarto-html/popper.min.js"></script>
-<script src="MLE_lec3_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="MLE_lec3_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="MLE_lec3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="MLE_lec3_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="MLE_lec3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="MLE_lec6_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MLE_lec6_files/libs/quarto-html/tabby.min.js"></script>
+<script src="MLE_lec6_files/libs/quarto-html/popper.min.js"></script>
+<script src="MLE_lec6_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="MLE_lec6_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MLE_lec6_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="MLE_lec6_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="MLE_lec6_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Jim Bence">
-  <meta name="dcterms.date" content="2024-12-12">
-  <title>Maximum Likelihood Estimation using RTMB</title>
+  <meta name="author" content="Jim Bence  ">
+  <meta name="dcterms.date" content="2023-12-14">
+  <title>Lesson 6 - More Random Effects</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="MLE_lec3_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="MLE_lec3_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="MLE_lec6_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="MLE_lec6_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,80 +30,13 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        background-color: #ffffff;
-        color: #a0a0a0;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
-    div.sourceCode
-      { color: #1f1c1b; background-color: #ffffff; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #1f1c1b; } /* Normal */
-    code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
-    code span.an { color: #ca60ca; } /* Annotation */
-    code span.at { color: #0057ae; } /* Attribute */
-    code span.bn { color: #b08000; } /* BaseN */
-    code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
-    code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #924c9d; } /* Char */
-    code span.cn { color: #aa5500; } /* Constant */
-    code span.co { color: #898887; } /* Comment */
-    code span.cv { color: #0095ff; } /* CommentVar */
-    code span.do { color: #607880; } /* Documentation */
-    code span.dt { color: #0057ae; } /* DataType */
-    code span.dv { color: #b08000; } /* DecVal */
-    code span.er { color: #bf0303; text-decoration: underline; } /* Error */
-    code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
-    code span.fl { color: #b08000; } /* Float */
-    code span.fu { color: #644a9b; } /* Function */
-    code span.im { color: #ff5500; } /* Import */
-    code span.in { color: #b08000; } /* Information */
-    code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
-    code span.op { color: #1f1c1b; } /* Operator */
-    code span.ot { color: #006e28; } /* Other */
-    code span.pp { color: #006e28; } /* Preprocessor */
-    code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
-    code span.sc { color: #3daee9; } /* SpecialChar */
-    code span.ss { color: #ff5500; } /* SpecialString */
-    code span.st { color: #bf0303; } /* String */
-    code span.va { color: #0057ae; } /* Variable */
-    code span.vs { color: #bf0303; } /* VerbatimString */
-    code span.wa { color: #bf0303; } /* Warning */
   </style>
-  <link rel="stylesheet" href="MLE_lec3_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="MLE_lec6_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="https://qfcatmsu.github.io/css/presStyle.css">
-  <link href="MLE_lec3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="MLE_lec3_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="MLE_lec3_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="MLE_lec3_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="MLE_lec6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="MLE_lec6_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="MLE_lec6_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="MLE_lec6_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -395,317 +328,119 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="https://qfcatmsu.github.io/Images/dark-big.png" data-background-position="6% 95%" data-background-size="40%" class="quarto-title-block center">
-  <h1 class="title">Maximum Likelihood Estimation using RTMB</h1>
-  <p class="subtitle">Lesson 3 - Controlling the search and assessing uncertainty <br> <a href="https://qfcatmsu.github.io/MLE-Software/lesson3/MLE_lec3.html" style="position:absolute;top:40%lesson1;left:35%;font-size:20px;">Click here to view presentation online</a></p>
+  <h1 class="title">Lesson 6 - More Random Effects</h1>
+  <p class="subtitle">MLE Software Online Course<br> <a href="https://qfcatmsu.github.io/MLE-RTMB/lesson6/MLE_lec6.html" style="position:absolute;top:40%;left:35%;font-size:20px;">Click here to view presentation online</a></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jim Bence 
+Jim Bence <br> 
 </div>
 </div>
 </div>
 
-  <p class="date">12 December 2024</p>
+  <p class="date">14 December 2023</p>
 </section>
-<section id="outline" class="slide level2">
-<h2>Outline:</h2>
+<section id="topics" class="slide level2">
+<h2>Topics</h2>
 <ul>
-<li>Parameterization</li>
-<li>Fixing parameters</li>
-<li>Bounding parameters</li>
-<li>Review and more detail on asymptotic standard errors</li>
-<li>More than you need to know about the delta method</li>
-<li>Profile likelihood CIs</li>
-<li>Self-test simulations and parametric bootstrap</li>
+<li><p>Overdispersion via random effects</p></li>
+<li><p>What about REML?</p></li>
+<li><p>Residuals</p></li>
+<li><p>So is the Laplace approximation working?</p></li>
 </ul>
 </section>
-<section id="parameterization---what-we-want" class="slide level2">
-<h2>Parameterization - what we want</h2>
+<section id="overdispersion-via-random-effects" class="slide level2">
+<h2>Overdispersion via random effects</h2>
 <ul>
-<li>Formal parameters (e.g., what gets sent to nlminb):
+<li>For distributions where variance cannot be controlled separately from mean (e.g., Poisson, multinomial)
 <ul>
-<li>can legally take values on the entire real number line <strong>or</strong> are restricted from searching outside bounds (or both)</li>
+<li>Treat parameters of these distributions as random</li>
 </ul></li>
-<li>Formal parameters estimates have values on similar scales to one another</li>
-<li>Formal parameter estimates are not too highly correlated with one another</li>
+<li>New probability distributions have been defined this way.
+<ul>
+<li>E.g., the NB (Poisson, gamma rate parameter), Dirichlet-multinomial (multinomial, p vector Dirichlet)</li>
+<li>Compound pdf found by integrating the joint likelihood</li>
+</ul></li>
+<li>Alternatively could specify observation-specific random effects. E.g., Poisson with log of rate normal (this is GLMM, with log link function) - Easy to generalize using RTMB.</li>
 </ul>
 </section>
-<section id="functional-invariance-and-parameter-transformation" class="slide level2">
-<h2>Functional invariance and parameter transformation</h2>
+<section id="reml" class="slide level2">
+<h2>REML</h2>
 <ul>
-<li><p>Formal (estimated) params transformations of natural params</p></li>
-<li><p>Relies on functional invariance of MLE</p>
-<ul>
-<li><p>if NLL(<span class="math inline">\(\theta\)</span>) = NLL(<span class="math inline">\(g(\theta)\)</span>) then search on <span class="math inline">\(\theta\)</span> or on <span class="math inline">\(g(\theta)\)</span></p></li>
-<li><p>Example: estimate log_theta and calculate theta=exp(log_theta) inside the NLL function</p></li>
-<li><p>Another example is natural parameters 0&lt;theta&lt;1 or -1&lt;theta&lt;+1 (e.g., correlations)</p></li>
-</ul></li>
+<li>ML variance estimates are known to be biased</li>
+<li>REML variance estimates are unbiased in linear normal models and generally less biased than ML estimates</li>
+<li>REML estimates can be obtained by declaring all the fixed effects other than the variances as random (don’t add anything to the function you minimize)</li>
+<li>Pretty much ignored and not studied/evaluated in stock assessment</li>
 </ul>
 </section>
-<section id="logit-transformation-for-0-1-or--1--1" class="slide level2">
-<h2>Logit transformation (for 0-1 or -1 -+1)</h2>
-<p><span class="math display">\[
-\begin{array}{l}b=\operatorname{logit}(a)=\log \left(\frac{a}{1-a}\right) \\a=\operatorname{logit}^{-1}(b)=\frac{1}{1+\exp (-b)}\end{array}
-\]</span></p>
+<section id="demonstration-of-reml-for-known-bias-case" class="slide level2">
+<h2>Demonstration of REML for “known” bias case</h2>
 <ul>
-<li><p><span class="math inline">\(0\leq a \leq1\)</span>, <span class="math inline">\(b\)</span> on real number line, so estimate b then calculate a</p></li>
-<li><p>For <span class="math inline">\(-1 \leq c \leq +1\)</span> from b (estimate b and calculate c)</p>
-<p><span class="math display">\[
-c=2 \operatorname{logit}^{-1}(b)-1=\frac{2}{1+\exp (-b)}-1
-\]</span></p></li>
+<li>In standard regression (with normal errors) the maximum likelihood estimate for residual error variance is (residual SS)/n.</li>
+<li>The minimum variance unbiased estimate for linear regression is (residual SS)/(n-2).</li>
+<li>This is approximately unbiased for nonlinear regression.</li>
+<li>The RTMB reml procedure will produce the approximatley unbiased estimates (see musky_vonb_reml.R)</li>
+<li>This is just to demo of what REML is doing for a known answer case!</li>
 </ul>
 </section>
-<section id="flow-when-using-rtmb" class="slide level2">
-<h2>Flow when using RTMB</h2>
-
-<img data-src="images/tranformation%20flow.png" class="r-stretch"></section>
-<section id="for-similar-quantities" class="slide level2">
-<h2>For similar quantities</h2>
+<section id="residuals" class="slide level2">
+<h2>Residuals</h2>
 <ul>
-<li>E.g., catchability for different survey gears, or year or location effects</li>
-<li>One approach: base and offsets
+<li><p>standard Pearson residuals</p></li>
+<li><p>Problems with standard Pearson residuals</p></li>
+<li><p>One step ahead (osa) aka recursive quantile residuals</p></li>
+</ul>
+</section>
+<section id="pearson-residuals" class="slide level2">
+<h2>Pearson residuals</h2>
 <ul>
-<li>Estimate base level (gear, year, location) and offsets
+<li>defined as (obs-pred)/sd</li>
+<li>sd is what the standard deviation for (obs-pred) should be given your model and model estimates</li>
+<li>Idea is that if raw residuals are approximately normal and independent then Pearson residuals will be approximately normal, independent, with equal (1) variance.
 <ul>
-<li>Two gears: estimate logqgill and offtrap, logqgill is the log-scale gill net catchability. logqtrap=logqgill+offset</li>
-<li>for year-effects, estimate YE0, offsets for nyears-1 other years. Then YE[1]=YE0, and (i&gt;1) YE[i]=YE_0+offset[i-1]</li>
-</ul></li>
-</ul></li>
-<li>Alternative is estimate mean and deviations from mean
-<ul>
-<li>Trickier because for n levels you can estimate the mean and n-1 deviations. The last deviation is calculated.</li>
+<li>So all the residuals can be looked at together</li>
 </ul></li>
 </ul>
 </section>
-<section id="forcing-parameter-order" class="slide level2">
-<h2>Forcing parameter order</h2>
+<section id="problems-with-pearson-residuals" class="slide level2">
+<h2>Problems with Pearson residuals</h2>
 <ul>
-<li>You want theta[1]&lt; theta[2]&lt; theta[3]
+<li><p>Actual residuals typically:</p>
 <ul>
-<li>Estimate theta[1] and two increments
-<ul>
-<li>theta[2]=theta[1]+inc[1], theta[3]=theta[2]+inc[2]</li>
+<li><p>Not normal</p></li>
+<li><p>Not independent</p></li>
 </ul></li>
+<li><p>In addition, we really want to look at residuals in some sense integrated over random effects, rather than at the best estimates of random effects</p></li>
+</ul>
+</section>
+<section id="solutions-osa-recursive-quantile-residuals" class="slide level2">
+<h2>Solutions: OSA = Recursive quantile residuals:</h2>
+<ul>
+<li>The capability is built into RTMB and in theory can be applied almost automatically: oneStepPredict(obj) - with data set up using OBS</li>
+<li>Numerically intensive and can be numerically tricky.</li>
+<li>The theory underlying this is pretty intense. See: Thygesen et al.&nbsp;Environ Ecol Stat 24(2): 317–339.</li>
+<li>I have not gotten this working for multinomial.</li>
+<li>Near automatic approach relies on TMB/RTMB understanding the density functions you are using.</li>
+</ul>
+</section>
+<section id="checking-on-the-laplace-approximation" class="slide level2">
+<h2>Checking on the Laplace approximation</h2>
+<ul>
+<li><p>Approximation depends on approximate normality of the combined vector or parameter estimates and random estimates.</p></li>
+<li><p>This is why we generally don’t specify non-normal distributions for random effects.</p></li>
+<li><p>RTMB includes a helper function that checks the Laplace approximation</p></li>
+</ul>
+</section>
+<section id="rtmb-function-checkconsistency-to-check-on-laplace-approximation" class="slide level2">
+<h2>RTMB function checkConsistency to check on Laplace approximation</h2>
+<ul>
+<li>Call as checkConsistency(obj) or as checkConsistency(obj,estimate=TRUE). Run summary on result.</li>
+<li>Requires you have set up your function for simulation (using OBS) (and the simulations work!).</li>
+<li>Usually want estimate=TRUE optional argument. This conducts a full simulation and evaluates parameter bias and whether simulated data are constent with assumed distributions.of simulation.
+<ul>
+<li>Without this it evaluates the approximation in an approximate way (but faster).</li>
 </ul></li>
-<li>Thought experiment: suppose you are estimating selectivity-at-age and are working with 10 ages so you need sel[i], i=1 to 10.
-<ul>
-<li>You are willing to assume/define sel[10]=1. You want:
-<ul>
-<li>0&lt;=sel[i]&lt;=1</li>
-<li>sel[i]&lt;=sel[i+1]</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="my-solution" class="slide level2">
-<h2>My solution</h2>
-<ul>
-<li><p>Estimate “adjust_par” that determine “adjust” constrained between 0 and 1</p></li>
-<li><p>Loop backwards from i=9 to i=1, with sel[i]=adjust[i]*sel[i+1]</p></li>
-</ul>
-</section>
-<section id="getting-things-set-up" class="slide level2">
-<h2>Getting things set up</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>logit<span class="ot">=</span><span class="cf">function</span>(x){</span>
-<span id="cb1-2"><a href=""></a>  <span class="fu">log</span>(x<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>x));</span>
-<span id="cb1-3"><a href=""></a>}</span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a>invlogit<span class="ot">=</span><span class="cf">function</span>(x){</span>
-<span id="cb1-6"><a href=""></a>  <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>x));</span>
-<span id="cb1-7"><a href=""></a>}</span>
-<span id="cb1-8"><a href=""></a></span>
-<span id="cb1-9"><a href=""></a><span class="co"># tr_adjust might be starting values of transformed adjusts</span></span>
-<span id="cb1-10"><a href=""></a>tradjust<span class="ot">=</span><span class="fu">rep</span>(<span class="fu">logit</span>(.<span class="dv">9</span>),<span class="dv">9</span>);</span>
-<span id="cb1-11"><a href=""></a>tradjust;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.197225 2.197225 2.197225 2.197225 2.197225 2.197225 2.197225 2.197225
-[9] 2.197225</code></pre>
-</div>
-</div>
-</section>
-<section id="code-like-this-inside-nll-function" class="slide level2">
-<h2>Code like this inside NLL function</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>adjust <span class="ot">=</span> <span class="fu">invlogit</span>(tradjust);</span>
-<span id="cb3-2"><a href=""></a>sel<span class="ot">=</span><span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">10</span>);</span>
-<span id="cb3-3"><a href=""></a>sel[<span class="dv">10</span>] <span class="ot">=</span> <span class="dv">1</span>;</span>
-<span id="cb3-4"><a href=""></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>){</span>
-<span id="cb3-5"><a href=""></a>  sel[<span class="dv">10</span><span class="sc">-</span>i] <span class="ot">=</span> adjust[<span class="dv">10</span><span class="sc">-</span>i]<span class="sc">*</span>sel[<span class="dv">10</span><span class="sc">-</span>i<span class="sc">+</span><span class="dv">1</span>]</span>
-<span id="cb3-6"><a href=""></a>}</span>
-<span id="cb3-7"><a href=""></a>sel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.3874205 0.4304672 0.4782969 0.5314410 0.5904900 0.6561000 0.7290000
- [8] 0.8100000 0.9000000 1.0000000</code></pre>
-</div>
-</div>
-</section>
-<section id="bounds" class="slide level2">
-<h2>Bounds</h2>
-<ul>
-<li><p>You specify these as vectors for lower and upper bounds</p></li>
-<li><p>These are passed to nlminb (so not part of RTMB)</p></li>
-<li><p>Behavior is different than in admb (bound pars will be failed convergence)</p></li>
-<li><p>Code squib</p>
-<p>#create upper and lower bounds</p>
-<p>lower = c(4,-5,-5,0); upper = c(10,1,5,10);</p>
-<p>#fit with bounds, here “…” the usual args</p>
-<p>fit = nlminb(…, upper=upper, lower=lower);</p></li>
-</ul>
-</section>
-<section id="fixing-not-estimating-a-parameter" class="slide level2">
-<h2>Fixing (not estimating) a parameter</h2>
-<ul>
-<li><p>We fix parameters using maps</p></li>
-<li><p>You create a map as a named list where parameters you want to fix are included as factors set to missing values</p>
-<p>E.g., if you wanted to fix loglinf:</p>
-<p>gmmap = list(loglinf=factor(NA));</p></li>
-<li><p>The map is passed as an argument to MakeADFun</p>
-<p>obj=MakeADFun(…, map=grmap);</p></li>
-</ul>
-</section>
-<section id="exercises" class="slide level2">
-<h2>Exercises</h2>
-<ul>
-<li><p>Modify the vonB program to bound the parameters (bounds in previous example code reasonable values)</p></li>
-<li><p>Modify the vonB program to not estimate log_linf using a map</p></li>
-<li><p>See if you can combine setting bounds and fixing a parameter (hint: fixed par is not in vector nlminb sees)</p></li>
-</ul>
-</section>
-<section id="uncertainty-basic-definitions-of-expected-value-variance-covariance-and-correlation" class="slide level2">
-<h2>Uncertainty, basic definitions of expected value, variance, covariance, and correlation</h2>
-<p><span class="math display">\[
-\mathrm{E}[X]=\int_{-\infty}^{\infty} x f(x) d x
-\]</span></p>
-<p><span class="math display">\[
-\text{Var}(X)=E[(X-E[X])^2]
-\]</span></p>
-<p><span class="math display">\[
-\text{Cov}(X,Y)=E[(X-E[X])(Y-E[Y])]
-\]</span></p>
-<p><span class="math display">\[
-\text{Corr}(X,Y)=\text{Cov}(X,Y)/(\sigma_X \sigma_Y)
-\]</span></p>
-</section>
-<section id="confidence-intervals-cis" class="slide level2">
-<h2>Confidence Intervals (CIs)</h2>
-<ul>
-<li><p>An interval that might contain the true value of a parameter (or other estimated quantity)</p></li>
-<li><p>The confidence level is the probability that under repeated sampling the interval does contain the true value.</p></li>
-<li><p>E.g., for a 95% CI, it is expected that 95% of intervals constructed in the same way will include the true value being estimated.</p></li>
-</ul>
-</section>
-<section id="asymptotic-variance-covariance-matrix-and-wald-confidence-intervals" class="slide level2">
-<h2>Asymptotic variance covariance matrix and Wald confidence intervals</h2>
-<ul>
-<li><p>The estimated variances for the parameter estimators are the diagonal elements from matrix, SEs are their square roots.</p></li>
-<li><p>A Wald test assumes <span class="math inline">\(Z=\left(\hat{\theta}-\theta_{0}\right) / SE\)</span> comes from a N(0,1) distribution, so one would expect <span class="math inline">\(Pr(|Z|&gt;1.96)=0.05\)</span></p>
-<ul>
-<li>One would reject <span class="math inline">\(H_0: \theta = \theta_0\)</span> at the 0.05 level if <span class="math inline">\(|Z|&gt;1.96\)</span></li>
-</ul></li>
-<li><p>A Wald CI inverts a Wald test</p></li>
-</ul>
-</section>
-<section id="wald-confidence-interval" class="slide level2">
-<h2>Wald Confidence Interval</h2>
-<ul>
-<li><p>A <span class="math inline">\(100(1-\alpha) \%\)</span> CI is: <span class="math inline">\(\hat{\theta} \pm \Phi^{-1}(1-\alpha / 2) S E\)</span>, <span class="math inline">\(\Phi\)</span> is the CDF for a N(0,1) distribution, <span class="math inline">\(\Phi^{-1}\)</span> is the inverse CDF or quantile function for N(0,1)</p></li>
-<li><p>This is based on inverting a Wald test (i.e., find the Z values that just make the Wald test significant)</p></li>
-<li><p>Special case - 95% CI: <span class="math inline">\(\hat{\theta} \pm 1.96 S E\)</span></p></li>
-</ul>
-</section>
-<section id="delta-method" class="slide level2">
-<h2>Delta method</h2>
-<ul>
-<li><p>This is what ADREPORT uses to get variances for derived (non-parameters) quantities.</p></li>
-<li><p><span class="math inline">\(\text{Côv}[g(\underline{\theta}), h(\underline{\theta})] \cong \sum_{i} \sum_{j} \operatorname{Côv} \left[\theta_{i}, \theta_{j}\right] \frac{\partial g(\underline{\theta})}{\partial \theta_{i}} \frac{\partial h(\underline{\theta})}{\partial \theta j}\)</span></p>
-<ul>
-<li>Formula for variance is just special case of this.</li>
-</ul></li>
-<li><p>Main point is you can approximate variance of any function of parameters based on covariances of parameters and derivatives of function with respect to parameters</p></li>
-<li><p>If you can get Variances (and hence SEs) you can get Wald CIs</p></li>
-</ul>
-</section>
-<section id="likelihood-ratio-test" class="slide level2">
-<h2>Likelihood ratio test</h2>
-<ul>
-<li>Likelihood profile CI based on inverting a Likelihood Ratio test, with test statistic:</li>
-</ul>
-<p><span class="math display">\[
-\begin{array} LLRT=-2 \log \frac{\sup \left(L(\underline{\theta}), \underline{\theta} \in \underline{\theta_{0}}\right)}{\sup (L(\underline{\theta}), \underline{\theta} \in \underline{\theta})}=
-\\-2\left[\log \left(\sup \left(L(\underline{\theta}), \underline{\theta} \in \underline{\Theta}_{0}\right)\right)-\log (\sup (L(\underline{\theta}), \underline{\theta} \in \underline{\theta})]\right. \end{array}
-\]</span></p>
-<ul>
-<li><p><span class="math inline">\(LR T \sim X_{\nu}^{2}\)</span> with <span class="math inline">\(\nu\)</span> df (based on number of restrictions)</p></li>
-<li><p>Of interest here is <span class="math inline">\(\underline{\theta} \in \underline{\Theta}_{0}\)</span> with one parameter fixed, testing if that focal parameter differs from fixed value.</p>
-<ul>
-<li>In this case <span class="math inline">\(\text{crit}=C D F_{X_{1}^{2}}^{-1}(1-\alpha)\)</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="steps-in-likelihood-ratio-test-for-one-fixed-parameter" class="slide level2">
-<h2>Steps in Likelihood ratio test for one fixed parameter</h2>
-<ol type="1">
-<li><p>Fit the full model and model with one focal parameter fixed, and extract likelihood (or log likelihood) from results and calculate the test statistic.</p></li>
-<li><p>Find the critical value (it will always be 3.8415 if one parameter is fixed and your test is at the 0.05 level, otherwise use the chi-square quantile function).</p></li>
-<li><p>Compare the test statistic with crit and declare significant if crit exceeded.</p></li>
-</ol>
-</section>
-<section id="likelihood-profile-ci-steps" class="slide level2">
-<h2>Likelihood profile CI steps</h2>
-<ol type="1">
-<li><p>Fit the unrestricted model. &nbsp;</p></li>
-<li><p>Repeatedly fit a restricted version of the model with the focal parameter fixed at a range of finely spaced values.</p></li>
-<li><p>Find the upper and lower values (above and below the point estimate from the unrestricted model) that produce a significant likelihood ratio test.</p></li>
-</ol>
-
-<img data-src="images/LikeratioCI.png" width="234" class="r-stretch"></section>
-<section id="code-to-get-likelihood-profile-ci" class="slide level2">
-<h2>Code to get likelihood profile CI</h2>
-<p>library(TMB); #load for CI</p>
-<p>loglinfprof = tmbprofile(obj,“log_linf”);</p>
-<p>confint(loglinfprof);</p>
-<p>plot(loglinfprof);</p>
-
-<img data-src="images/log_linf_profile.png" width="395" class="r-stretch"></section>
-<section id="coding-issue" class="slide level2">
-<h2>Coding issue</h2>
-<p>Once you load the TMB package, calls to MakeADFun() do not work unless they explicitly name the RTMB package as in:</p>
-<p>RTMB::MakeADFun(…);</p>
-</section>
-<section id="limitation-of-likelihood-profile-cis" class="slide level2">
-<h2>Limitation of likelihood profile CIs</h2>
-<ul>
-<li><p>In TMB for parameters only</p></li>
-<li><p>Some have suggested constraining fit with penalty so desired values of derived quantities could be matched. Theory for this is not fully worked out and its not implemented in TMB.</p></li>
-<li><p>Hence worth exploring simulation approaches (aka parametric bootstrap</p>
-<ul>
-<li>Simulations of course are for more than CIs</li>
-</ul></li>
-</ul>
-</section>
-<section id="simulations-using-rtmb" class="slide level2">
-<h2>Simulations using RTMB</h2>
-<ul>
-<li><p>To simulate data from your model you:</p>
-<ul>
-<li><p>Mark data you want simulated in your NLL function</p>
-<p>y=OBJ(y);</p></li>
-<li><p>After fitting (or before if you want to simulate from starting values)</p>
-<p>simy=my_obj$simulate()$y</p></li>
-</ul></li>
-<li><p>Common plan: (1) replace data model was fit to with simulated data, (2) refit the model to this copy and save pertinent results. Repeat 1&amp;2 many times and summarize.</p></li>
-<li><p>I will demo doing one simulation, outline the full simulation procedure, then turn you loose on it.</p></li>
-</ul>
-</section>
-<section id="passing-rtmb-data" class="slide level2">
-<h2>Passing RTMB data</h2>
-<ul>
-<li>MakeADFun expects a function with one argument (named parameter list)</li>
-<li>It would be nice if we could make both the data and parameters arguments</li>
-<li>There is way around this - MakeADFun interprets function of function</li>
-<li>See: musky_vonb_closure.R</li>
 </ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
@@ -717,19 +452,19 @@ c=2 \operatorname{logit}^{-1}(b)-1=\frac{2}{1+\exp (-b)}-1
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="MLE_lec3_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="MLE_lec3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="MLE_lec3_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="MLE_lec3_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="MLE_lec6_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -923,82 +658,6 @@ c=2 \operatorname{logit}^{-1}(b)-1=\frac{2}{1+\exp (-b)}-1
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

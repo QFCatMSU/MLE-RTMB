@@ -11,8 +11,8 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Jim Bence">
-  <meta name="dcterms.date" content="2024-12-11">
-  <title>Software tools for Maximum Likelihood Estimation:MB</title>
+  <meta name="dcterms.date" content="2024-12-16">
+  <title>Software tools for Maximum Likelihood Estimation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -395,7 +395,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="https://qfcatmsu.github.io/Images/dark-big.png" data-background-position="6% 95%" data-background-size="40%" class="quarto-title-block center">
-  <h1 class="title">Software tools for Maximum Likelihood Estimation:MB</h1>
+  <h1 class="title">Software tools for Maximum Likelihood Estimation</h1>
   <p class="subtitle">Lesson 2 - first RTMB &amp; Derivatives <br> <a href="https://qfcatmsu.github.io/MLE-Software/lesson2/MLE_lec2.html" style="position:absolute;top:40%lesson1;left:35%;font-size:20px;">Click here to view presentation online</a></p>
 
 <div class="quarto-title-authors">
@@ -406,7 +406,7 @@ Jim Bence
 </div>
 </div>
 
-  <p class="date">11 December 2024</p>
+  <p class="date">16 December 2024</p>
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline:</h2>
@@ -449,20 +449,7 @@ Jim Bence
 </section>
 <section id="exercise---change-model-to-assume-gamma-rather-than-normal-in-breakout-groups" class="slide level2">
 <h2>Exercise - change model to assume gamma rather than normal (in breakout groups)</h2>
-<p>Hints</p>
-<ul>
-<li><p>Estimate logscale and logshape, where scale and shape are parameters of gamma distribution</p></li>
-<li><p>Use dgamma instead of dnorm or dbinom</p></li>
-<li><p>Starting values could be based on starting values for mean and variance. Use the following relationships</p>
-<ul>
-<li><p>X~gamma(shape,scale) then (from help(dgamma))</p>
-<ul>
-<li><p>E(X)=shape*<em>scale V(X)=shape</em>*scale^2</p></li>
-<li><p>scale=V(X)/E(X)</p></li>
-<li><p>shape=E(X)/scale</p></li>
-</ul></li>
-</ul></li>
-</ul>
+<p>Hints - Estimate logscale and logshape, where scale and shape are parameters of gamma distribution - Use dgamma instead of dnorm or dbinom - Starting values could be based on starting values for mean and variance. Use the following relationships - X~gamma(shape,scale) then (from help(dgamma)) - E(X)=shape*<em>scale V(X)=shape</em>*scale^2 - scale=V(X)/E(X) - shape=E(X)/scale</p>
 </section>
 <section id="what-is-a-derivative" class="slide level2">
 <h2>What is a derivative</h2>
@@ -747,6 +734,17 @@ Maximum gradient component: 0.0001970265 </code></pre>
 <li><p>Change REPORT(atagepred) to ADREPORT(atagepred) and look at sdreport and summary of the sdreport</p></li>
 <li><p>Calculate a new variable equal to vbk*linf as ADREPORT</p></li>
 <li><p>If time: change the model so data are assumed gamma distributed (with expected value given by vonB equation and constant variance)</p></li>
+</ul>
+</section>
+<section id="probalistic-notation" class="slide level2">
+<h2>Probalistic notation</h2>
+<ul>
+<li><p>You can use notation that looks more like other package model statements</p></li>
+<li><p>E.g.,</p>
+<p>x %~% dnorm(0,1) #Add the neg log of N(0,1) density for x to fn return</p></li>
+<li><p>See probnotation.R in lesson 2 R folder</p></li>
+<li><p>Positives: automatically uses log and gets sign right</p></li>
+<li><p>Makes it a bit harder to test bits of your function</p></li>
 </ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">

@@ -8,27 +8,28 @@ gmRdat = read.table("lesson3/data/musky_vonb.dat",head=T)
 
 #Set up the data and starting value of parameters for RTMB
 gmdat = list(lenobs=gmRdat[,"Length"],age=gmRdat[,"Age"])
-parlst = list(loglinf=7,logvbk=-1.6,t0=0,logsd=4)
+par = list(logLinf=7,logK=-1.6,t0=0,logsd=4)
 
 
-f = function(parlst){
-  getAll(datlst,parlst)
-  linf = exp(loglinf)
-  vbk = exp(logvbk)
+f = function(par){
+  getAll(dat,par)
+  Linf = exp(logLinf)
+  K = exp(logK)
   sd = exp(logsd)
   lenobs=OBS(lenobs) # New line!
-  lenpred = linf * (1 - exp(-vbk * (age - t0)))
+  lenpred = Linf * (1 - exp(-K * (age - t0)))
   nll = -sum(dnorm(lenobs, lenpred, sd, TRUE))
-  atagepred = linf * (1 - exp(-vbk * ((1:11) - t0)))
+  atagepred = Linf * (1 - exp(-K * ((1:11) - t0)))
   REPORT(atagepred)
   nll
 }
 
 #TIP - assign data you want to use to list used in your NLL function
 #   immediately before MakeADFun (when using different datasets)
+#   or use closure function (covered later)
 #Create object and fit model to original data
-datlst=gmdat
-obj=RTMB::MakeADFun(f,parlst)
+dat=gmdat
+obj=RTMB::MakeADFun(f,par)
 fit=nlminb(obj$par, obj$fn, obj$gr)
 fit$convergence
 sdr=sdreport(obj)
@@ -37,8 +38,8 @@ sdr
 simdat=gmdat;  #copy real data
 #Simulate obs lengths, write to data copy,refit model
 simdat$lenobs=obj$simulate()$lenobs
-datlst=simdat
-objsim <- RTMB::MakeADFun(f,parlst)
+dat=simdat
+objsim <- RTMB::MakeADFun(f,par)
 simfit = nlminb(objsim$par, objsim$fn, objsim$gr)
 simconv=simfit$convergence
 simsdr=sdreport(objsim)
@@ -75,7 +76,7 @@ lstconv[[2]]=unlist(simconv)
 # e.g., each row a simulation run, each col the est for a different param
 
 #First put all results in one list (not essential);
-reslst<-list(est=lstest,se=lst_se,conv=lstconv)
+reslst<-list(est=lstest,se=lstse,conv=lstconv)
 
 #Then create the matrix of estimates
 matrixest=do.call(rbind,reslst$est)
@@ -86,9 +87,9 @@ vecconv=as.vector(do.call(rbind,reslst$conv))
 
 # Say you wanted to simulate with starting pars (or others)
 # rather than estimated
-#  Recreate obj using desired parlst and don't fit!
+#  Recreate obj using desired pars and don't fit!
 #datlst=gmdat; 
-#obj=RTMB::MakeADFun(f,parlst);
+#obj=RTMB::MakeADFun(f,otherpar);
 
 
 set.seed(54321)
@@ -100,8 +101,8 @@ lstconv = list()
 
 for(i in 1:1000){
 #Simulate obs lengths, write to data copy,refit model
-datlst$lenobs=obj$simulate()$lenobs
-objsim <- RTMB::MakeADFun(f,parlst,silent=TRUE)
+dat$lenobs=obj$simulate()$lenobs
+objsim <- RTMB::MakeADFun(f,par,silent=TRUE)
 simfit = nlminb(objsim$par, objsim$fn, objsim$gr)
 simconv=simfit$convergence
 simsdr=sdreport(objsim)
@@ -126,18 +127,18 @@ mSEs=do.call(rbind,reslst$se)
 mconv=do.call(rbind,reslst$conv)
 
 #Plot results and calculate 95% par bootstrap CI
-hist(mest[,"loglinf"])
-quantile(mest[,"loglinf"],probs=c(0.025,0.975))
+hist(mest[,"logLinf"])
+quantile(mest[,"logLinf"],probs=c(0.025,0.975))
 
 #coverage
 #note if you are simulating from other than estimated pars
 # this needs minor changes.
 
-ci=mest[,"loglinf"]+cbind(-mSEs[,"loglinf"],mSEs[,"loglinf"])*qnorm(0.975)
+ci=mest[,"logLinf"]+cbind(-mSEs[,"logLinf"],mSEs[,"logLinf"])*qnorm(0.975)
 ci=as.data.frame(ci)
 names(ci)=c("lb","ub")
 head(ci)
-tstci=with(ci, lb<= fit$par["loglinf"] & ub >= fit$par["loglinf"])
+tstci=with(ci, lb <= fit$par["logLinf"] & ub >= fit$par["logLinf"])
 #count up the cases its in the CI (if procedure right should be ~950)
 sum(tstci)
 

@@ -1,0 +1,101 @@
+---
+title: Lesson 6 - More Random Effects 
+title-slide-attributes:
+    data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
+    data-background-size: "40%"
+    data-background-position: "6% 95%"
+subtitle: MLE Software Online Course<br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-RTMB/lesson6/MLE_lec6.html){style="position:absolute;top:40%;left:35%;font-size:20px;"}
+author: Jim Bence <br>
+date: 14 December 2023
+date-format: "D MMMM YYYY"
+format: 
+  revealjs:
+    css: "https://qfcatmsu.github.io/css/presStyle.css"
+    slide-number: c/t  
+    theme: simple 
+editor: visual
+highlight-style: kate
+---
+
+## Topics
+
+-   Overdispersion via random effects
+
+-   What about REML?
+
+-   Residuals
+
+-   So is the Laplace approximation working?
+
+## Overdispersion via random effects
+
+-   For distributions where variance cannot be controlled separately from mean (e.g., Poisson, multinomial)
+    -   Treat parameters of these distributions as random
+-   New probability distributions have been defined this way.
+    -   E.g., the NB (Poisson, gamma rate parameter), Dirichlet-multinomial (multinomial, p vector Dirichlet)
+    -   Compound pdf found by integrating the joint likelihood
+-   Alternatively could specify observation-specific random effects. E.g., Poisson with log of rate normal (this is GLMM, with log link function) - Easy to generalize using RTMB.
+
+## REML
+
+-   ML variance estimates are known to be biased
+-   REML variance estimates are unbiased in linear normal models and generally less biased than ML estimates
+-   REML estimates can be obtained by declaring all the fixed effects other than the variances as random (don't add anything to the function you minimize)
+-   Pretty much ignored and not studied/evaluated in stock assessment
+
+## Demonstration of REML for "known" bias case
+
+-   In standard regression (with normal errors) the maximum likelihood estimate for residual error variance is (residual SS)/n.
+-   The minimum variance unbiased estimate for linear regression is (residual SS)/(n-2).
+-   This is approximately unbiased for nonlinear regression.
+-   The RTMB reml procedure will produce the approximatley unbiased estimates (see musky_vonb_reml.R)
+-   This is just to demo of what REML is doing for a known answer case!
+
+## Residuals
+
+-   standard Pearson residuals
+
+-   Problems with standard Pearson residuals
+
+-   One step ahead (osa) aka recursive quantile residuals
+
+## Pearson residuals
+
+-   defined as (obs-pred)/sd
+-   sd is what the standard deviation for (obs-pred) should be given your model and model estimates
+-   Idea is that if raw residuals are approximately normal and independent then Pearson residuals will be approximately normal, independent, with equal (1) variance.
+    -   So all the residuals can be looked at together
+
+## Problems with Pearson residuals
+
+-   Actual residuals typically:
+
+    -   Not normal
+
+    -   Not independent
+
+-   In addition, we really want to look at residuals in some sense integrated over random effects, rather than at the best estimates of random effects
+
+## Solutions: OSA = Recursive quantile residuals:
+
+-   The capability is built into RTMB and in theory can be applied almost automatically: oneStepPredict(obj) - with data set up using OBS
+-   Numerically intensive and can be numerically tricky.
+-   The theory underlying this is pretty intense. See:
+Thygesen et al. Environ Ecol Stat 24(2): 317--339.
+-   I have not gotten this working for multinomial.
+-   Near automatic approach relies on TMB/RTMB understanding the density functions you are using.
+
+## Checking on the Laplace approximation
+
+-   Approximation depends on approximate normality of the combined vector or parameter estimates and random estimates.
+
+-   This is why we generally don't specify non-normal distributions for random effects.
+
+-   RTMB includes a helper function that checks the Laplace approximation
+
+## RTMB function checkConsistency to check on Laplace approximation
+
+-   Call as checkConsistency(obj) or as checkConsistency(obj,estimate=TRUE). Run summary on result.
+-   Requires you have set up your function for simulation (using OBS) (and the simulations work!).
+-   Usually want estimate=TRUE optional argument. This conducts a full simulation and evaluates parameter bias and whether simulated data are consistent with assumed distributions.of simulation.
+    -   Without this it evaluates the approximation in an approximate way (but faster).
