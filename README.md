@@ -25,7 +25,7 @@ Lesson 3 (12/16/2024):
 <https://qfcatmsu.github.io/MLE-RTMB/lesson3/MLE_lec3.html>  
 
 Lesson 4 (12/16/2024):
-<https://qfcatmsu.github.io/MLE-RTMB/lesson4/MLE_lec3.html>  
+<https://qfcatmsu.github.io/MLE-RTMB/lesson4/MLE_lec4.html>  
 
 Lesson 5 Not ready yet
 
