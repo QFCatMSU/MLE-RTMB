@@ -1,12 +1,12 @@
 ---
-title: Lesson 6 - More Random Effects 
+title: Lesson 6 - More Random Effects and examples
 title-slide-attributes:
     data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
     data-background-size: "40%"
     data-background-position: "6% 95%"
 subtitle: MLE Software Online Course<br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-RTMB/lesson6/MLE_lec6.html){style="position:absolute;top:40%;left:35%;font-size:20px;"}
 author: Jim Bence <br>
-date: 14 December 2023
+date: 16 December 2023
 date-format: "D MMMM YYYY"
 format: 
   revealjs:
@@ -20,20 +20,26 @@ highlight-style: kate
 ## Topics
 
 -   Overdispersion via random effects
-
 -   What about REML?
-
 -   Residuals
-
 -   So is the Laplace approximation working?
+-   More examples
+    -   Age comp data - multinomial and Dirichlet-multinomial
+    -   Multivariate normal data
+    -   Correlated random effects for vonB model
+    -   Other undocumented examples
 
 ## Overdispersion via random effects
 
 -   For distributions where variance cannot be controlled separately from mean (e.g., Poisson, multinomial)
+
     -   Treat parameters of these distributions as random
+
 -   New probability distributions have been defined this way.
+
     -   E.g., the NB (Poisson, gamma rate parameter), Dirichlet-multinomial (multinomial, p vector Dirichlet)
     -   Compound pdf found by integrating the joint likelihood
+
 -   Alternatively could specify observation-specific random effects. E.g., Poisson with log of rate normal (this is GLMM, with log link function) - Easy to generalize using RTMB.
 
 ## REML
@@ -80,9 +86,7 @@ highlight-style: kate
 
 -   The capability is built into RTMB and in theory can be applied almost automatically: oneStepPredict(obj) - with data set up using OBS
 -   Numerically intensive and can be numerically tricky.
--   The theory underlying this is pretty intense. See:
-Thygesen et al. Environ Ecol Stat 24(2): 317--339.
--   I have not gotten this working for multinomial.
+-   The theory underlying this is pretty intense. See: Thygesen et al. Environ Ecol Stat 24(2): 317--339.
 -   Near automatic approach relies on TMB/RTMB understanding the density functions you are using.
 
 ## Checking on the Laplace approximation
@@ -99,3 +103,126 @@ Thygesen et al. Environ Ecol Stat 24(2): 317--339.
 -   Requires you have set up your function for simulation (using OBS) (and the simulations work!).
 -   Usually want estimate=TRUE optional argument. This conducts a full simulation and evaluates parameter bias and whether simulated data are consistent with assumed distributions.of simulation.
     -   Without this it evaluates the approximation in an approximate way (but faster).
+
+## More examples
+
+-   Age comp data
+    -   multinomial and Dirichlet-multinomial
+-   Multivariate normal data
+-   Correlated random effects for vonB model
+-   Other undocumented examples
+
+## Age comp example
+
+-   Constant recruitment and survival (necessary in example because the only type of data being used is age comps).
+-   multiple samples of age composition. Initially assumed to be multinomial, then Dirichlet multinomial
+-   Alternatives
+    -   Assume selectivity known (correctly)
+    -   Estimate selectivity for each age forced to increase monotonically
+    -   Estimate selectivity via a logistic function
+
+## Model
+
+$$
+\begin{array}{c}N_{a}=R \exp (-Z(a-r)), r \leq a \leq \max \\C_{i, a}=q_{i} S_{a} N_{a} \\p_{a}=\frac{S_{a} N_{a}}{\sum_{j=r}^{\max } S_{j} N_{j}} \\\underline{n}_{i} \sim \operatorname{multinom}\left(n_{i}, \underline{p}_{a}\right), n_{i}=\sum_{a=r}^{a=\max } n_{i, a}\end{array}
+$$
+
+## Setting effective sample size
+
+-   Multinomial apps often use data as proportions and "effective sample size" (ESS)
+
+-   In such applications the negative log likelihood was written in terms of proportions and ESS
+
+-   In RTMB emulate by providing dmultinom product of proportions and ESS as the data (don't set size!)
+
+    -   The NLL returned will depend on the ESS but ESS cannot be estimated (nothing new for multinomial here)
+
+    -   Works because the internal dmultinom calcs allow non-integers.
+
+## Dirichlet-Multinomial
+
+-   Compound distribution, p vector comes from dirichlet then used as parameter of multinomial.
+
+-   Used to introduce overdispersion relative to multinomial
+
+-   Using linear form where ESS proportional to sample size
+
+$$
+\begin{array}{c}\underline{n}_{i} \sim \operatorname{DirMult}\left(n_{i}, \underline{\alpha}_{i}\right), \alpha_{i, a}>0 \\E\left(n_{i, a}\right)=n_{i} \frac{\alpha_{i, a}}{\sum_{j} \alpha_{i, j}}, E S S_{i}=\sum_{a} \alpha_{j, a} \\\alpha_{i, a}=\theta n_{i} p_{a}, E S S_{i}=\theta n_{i}\end{array}
+$$
+
+## Multivariate Normal Distribution with unstructured var-cov matrix
+
+-   Parameterize so that standard deviations and correlations can be calculated and converted into a variance-covariance matrix
+
+-   Estimate the standard deviations on log-scale
+
+-   Not sufficient to restrict correlations to -1 to 1 as some combinations of correlations are not consistent with feasible correlation matrices
+
+    -   e.g., if *a* and *b* are highly negatively correlated, you can't have *c* highly positively correlated with *a* and highly negatively correlated with *b*
+
+## Converting SDs and correlation matrix to a var-cov matrix
+
+-   Typical element of correlation matrix P is $\rho_{i,j} = \sigma_{i,j}^{2}/(\sigma_{i,i}\sigma_{j,j})$
+
+    -   $\sigma_{i,j}^2$ is a typical element of the variance-covariance matrix, with $\sigma_{i,j}^2=\rho_{i,j}\sigma_{i,i}\sigma_{j,j}$
+
+-   Matrix algebra to convert correlation matrix and SDs to var-cov matrix
+
+$$
+\Sigma=\operatorname{diag}\left(\sigma_{1,1}, \cdots, \sigma_{k, k}\right) \mathrm{P} \operatorname{diag}\left(\sigma_{1,1}, \cdots, \sigma_{k, k}\right)
+$$
+
+## Motivation for being able to deal with unstructured MVN
+
+-   You might actually want to assume some data are multivariate normal (e.g., some catch-at-age assessments assume log of catch-at-age MVN). But often we impose structure on correlations.
+
+-   You might want to allow different random effects to be correlated. E.g., we might expect the vonB function parameters for a pond will be either positively or negatively correlated with one another.
+
+-   Illustrate with another very simple example
+
+## Simple application of unstructured multivariate normal
+
+-   We have a set of multivariate observations assumed to come from a multivariate normal distribution
+
+-   We estimate the mean vector and parameters that determine the variance-covariance matrix
+
+    -   Illustrate how to estimate parameters on real number line that determine a "legal" correlation matrix
+
+    -   Illustrate how to get the variance-covariance matrix from correlation matrix and vectors of standard deviations
+
+    -   See "unstructured" example R script
+
+## Correlated random effects for vonB model
+
+-   We have already seen how to make a vonB parameter a random effect. We could have made more than one parameter random at the same time using dnorm
+
+    -   This assumes the random effects are independent but often that is not plausible \[when fish ultimately get big (Linf) they might approach asymptotic size more slowly (K)\].
+
+-   We can implement this by having the vonB parameters follow a multivariate normal distribution
+
+-   Larger and more realistic example data set, reparameterized the vonB (use L2 rather than t0)
+
+## New growth data set
+
+-   20 different ponds
+
+-   Each observation gives the pond ID and the length and age for an individual fish
+
+## Reparameterized vonB
+
+-   This is not changing the underlying growth function, just how it is parameterized
+
+-   Standard parameterization has been criticized for t0 being hard to interpret and for correlation with other parameters
+
+-   Use L2 (length at age 2) instead. Chose age within range of observed data
+
+    $$
+    L_a=\widetilde{L}_{2}+\left(L_{\infty}-\widetilde{L}_{2}\right) \exp (-K(a-2))
+    $$
+
+## The multivariate random effects model
+
+$$
+\begin{array}{c}{\underline{\omega}_i = \left[\log L \infty_{i}, \log K_{i}, \log \widetilde{L 2}_{i}\right]^{T} \sim \\M V N\left(\left[\overline{\log L \infty_{i}}, \overline{\log K_{i}}, \overline{\log \widetilde{L 2}}\right]^{T}, \Sigma\right)} \\L_{i, j} \sim N\left(\operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right), \sigma_{L, i, j}^{2}\right) \\\sigma_{L, i, j}=\exp \left[\operatorname{int}+\operatorname{slp} * \operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right)\right] \operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right)\end{array}
+$$

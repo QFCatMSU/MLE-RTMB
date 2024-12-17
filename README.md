@@ -9,28 +9,28 @@
 
 Nothing here yet. Major fixes will be posted here (nothing yet)
 
+## end of half day session survey
+
+<https://msu.co1.qualtrics.com/jfe/form/SV_72ljUByhmNOMcnQ>
+
 ## Lesson links
 
-Lesson 1 (12/12/2024):
+Lesson 1 (12/16/2024):
 <https://qfcatmsu.github.io/MLE-RTMB/lesson1/MLE_lec1.html>  
 
-Lesson 2 (12/12/2024):
+Lesson 2 (12/16/2024):
 <https://qfcatmsu.github.io/MLE-RTMB/lesson2/MLE_lec2.html>  
 
-Lesson 3 (12/12/2024):
+Lesson 3 (12/16/2024):
 <https://qfcatmsu.github.io/MLE-RTMB/lesson3/MLE_lec3.html>  
 
-Lesson 4  
-Not ready yet
+Lesson 4 (12/16/2024):
+<https://qfcatmsu.github.io/MLE-RTMB/lesson4/MLE_lec3.html>  
 
-Lesson 5  
-Not ready yet
+Lesson 5 Not ready yet
 
-Lesson 6  
-Not ready yet
-
-Evolving description of misc examples  
-Not ready yet
+Lesson 6 (12/16/2024):
+<https://qfcatmsu.github.io/MLE-RTMB/lesson6/MLE_lec6.html>  
 
 ## Class Recordings
 

@@ -11,8 +11,8 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Jim Bence  ">
-  <meta name="dcterms.date" content="2023-12-14">
-  <title>Lesson 6 - More Random Effects</title>
+  <meta name="dcterms.date" content="2023-12-16">
+  <title>Lesson 6 - More Random Effects and examples</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -328,7 +328,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="https://qfcatmsu.github.io/Images/dark-big.png" data-background-position="6% 95%" data-background-size="40%" class="quarto-title-block center">
-  <h1 class="title">Lesson 6 - More Random Effects</h1>
+  <h1 class="title">Lesson 6 - More Random Effects and examples</h1>
   <p class="subtitle">MLE Software Online Course<br> <a href="https://qfcatmsu.github.io/MLE-RTMB/lesson6/MLE_lec6.html" style="position:absolute;top:40%;left:35%;font-size:20px;">Click here to view presentation online</a></p>
 
 <div class="quarto-title-authors">
@@ -339,30 +339,37 @@ Jim Bence <br>
 </div>
 </div>
 
-  <p class="date">14 December 2023</p>
+  <p class="date">16 December 2023</p>
 </section>
 <section id="topics" class="slide level2">
 <h2>Topics</h2>
 <ul>
-<li><p>Overdispersion via random effects</p></li>
-<li><p>What about REML?</p></li>
-<li><p>Residuals</p></li>
-<li><p>So is the Laplace approximation working?</p></li>
+<li>Overdispersion via random effects</li>
+<li>What about REML?</li>
+<li>Residuals</li>
+<li>So is the Laplace approximation working?</li>
+<li>More examples
+<ul>
+<li>Age comp data - multinomial and Dirichlet-multinomial</li>
+<li>Multivariate normal data</li>
+<li>Correlated random effects for vonB model</li>
+<li>Other undocumented examples</li>
+</ul></li>
 </ul>
 </section>
 <section id="overdispersion-via-random-effects" class="slide level2">
 <h2>Overdispersion via random effects</h2>
 <ul>
-<li>For distributions where variance cannot be controlled separately from mean (e.g., Poisson, multinomial)
+<li><p>For distributions where variance cannot be controlled separately from mean (e.g., Poisson, multinomial)</p>
 <ul>
 <li>Treat parameters of these distributions as random</li>
 </ul></li>
-<li>New probability distributions have been defined this way.
+<li><p>New probability distributions have been defined this way.</p>
 <ul>
 <li>E.g., the NB (Poisson, gamma rate parameter), Dirichlet-multinomial (multinomial, p vector Dirichlet)</li>
 <li>Compound pdf found by integrating the joint likelihood</li>
 </ul></li>
-<li>Alternatively could specify observation-specific random effects. E.g., Poisson with log of rate normal (this is GLMM, with log link function) - Easy to generalize using RTMB.</li>
+<li><p>Alternatively could specify observation-specific random effects. E.g., Poisson with log of rate normal (this is GLMM, with log link function) - Easy to generalize using RTMB.</p></li>
 </ul>
 </section>
 <section id="reml" class="slide level2">
@@ -420,7 +427,6 @@ Jim Bence <br>
 <li>The capability is built into RTMB and in theory can be applied almost automatically: oneStepPredict(obj) - with data set up using OBS</li>
 <li>Numerically intensive and can be numerically tricky.</li>
 <li>The theory underlying this is pretty intense. See: Thygesen et al.&nbsp;Environ Ecol Stat 24(2): 317–339.</li>
-<li>I have not gotten this working for multinomial.</li>
 <li>Near automatic approach relies on TMB/RTMB understanding the density functions you are using.</li>
 </ul>
 </section>
@@ -437,11 +443,144 @@ Jim Bence <br>
 <ul>
 <li>Call as checkConsistency(obj) or as checkConsistency(obj,estimate=TRUE). Run summary on result.</li>
 <li>Requires you have set up your function for simulation (using OBS) (and the simulations work!).</li>
-<li>Usually want estimate=TRUE optional argument. This conducts a full simulation and evaluates parameter bias and whether simulated data are constent with assumed distributions.of simulation.
+<li>Usually want estimate=TRUE optional argument. This conducts a full simulation and evaluates parameter bias and whether simulated data are consistent with assumed distributions.of simulation.
 <ul>
 <li>Without this it evaluates the approximation in an approximate way (but faster).</li>
 </ul></li>
 </ul>
+</section>
+<section id="more-examples" class="slide level2">
+<h2>More examples</h2>
+<ul>
+<li>Age comp data
+<ul>
+<li>multinomial and Dirichlet-multinomial</li>
+</ul></li>
+<li>Multivariate normal data</li>
+<li>Correlated random effects for vonB model</li>
+<li>Other undocumented examples</li>
+</ul>
+</section>
+<section id="age-comp-example" class="slide level2">
+<h2>Age comp example</h2>
+<ul>
+<li>Constant recruitment and survival (necessary in example because the only type of data being used is age comps).</li>
+<li>multiple samples of age composition. Initially assumed to be multinomial, then Dirichlet multinomial</li>
+<li>Alternatives
+<ul>
+<li>Assume selectivity known (correctly)</li>
+<li>Estimate selectivity for each age forced to increase monotonically</li>
+<li>Estimate selectivity via a logistic function</li>
+</ul></li>
+</ul>
+</section>
+<section id="model" class="slide level2">
+<h2>Model</h2>
+<p><span class="math display">\[
+\begin{array}{c}N_{a}=R \exp (-Z(a-r)), r \leq a \leq \max \\C_{i, a}=q_{i} S_{a} N_{a} \\p_{a}=\frac{S_{a} N_{a}}{\sum_{j=r}^{\max } S_{j} N_{j}} \\\underline{n}_{i} \sim \operatorname{multinom}\left(n_{i}, \underline{p}_{a}\right), n_{i}=\sum_{a=r}^{a=\max } n_{i, a}\end{array}
+\]</span></p>
+</section>
+<section id="setting-effective-sample-size" class="slide level2">
+<h2>Setting effective sample size</h2>
+<ul>
+<li><p>Multinomial apps often use data as proportions and “effective sample size” (ESS)</p></li>
+<li><p>In such applications the negative log likelihood was written in terms of proportions and ESS</p></li>
+<li><p>In RTMB emulate by providing dmultinom product of proportions and ESS as the data (don’t set size!)</p>
+<ul>
+<li><p>The NLL returned will depend on the ESS but ESS cannot be estimated (nothing new for multinomial here)</p></li>
+<li><p>Works because the internal dmultinom calcs allow non-integers.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="dirichlet-multinomial" class="slide level2">
+<h2>Dirichlet-Multinomial</h2>
+<ul>
+<li><p>Compound distribution, p vector comes from dirichlet then used as parameter of multinomial.</p></li>
+<li><p>Used to introduce overdispersion relative to multinomial</p></li>
+<li><p>Using linear form where ESS proportional to sample size</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{array}{c}\underline{n}_{i} \sim \operatorname{DirMult}\left(n_{i}, \underline{\alpha}_{i}\right), \alpha_{i, a}&gt;0 \\E\left(n_{i, a}\right)=n_{i} \frac{\alpha_{i, a}}{\sum_{j} \alpha_{i, j}}, E S S_{i}=\sum_{a} \alpha_{j, a} \\\alpha_{i, a}=\theta n_{i} p_{a}, E S S_{i}=\theta n_{i}\end{array}
+\]</span></p>
+</section>
+<section id="multivariate-normal-distribution-with-unstructured-var-cov-matrix" class="slide level2">
+<h2>Multivariate Normal Distribution with unstructured var-cov matrix</h2>
+<ul>
+<li><p>Parameterize so that standard deviations and correlations can be calculated and converted into a variance-covariance matrix</p></li>
+<li><p>Estimate the standard deviations on log-scale</p></li>
+<li><p>Not sufficient to restrict correlations to -1 to 1 as some combinations of correlations are not consistent with feasible correlation matrices</p>
+<ul>
+<li>e.g., if <em>a</em> and <em>b</em> are highly negatively correlated, you can’t have <em>c</em> highly positively correlated with <em>a</em> and highly negatively correlated with <em>b</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="converting-sds-and-correlation-matrix-to-a-var-cov-matrix" class="slide level2">
+<h2>Converting SDs and correlation matrix to a var-cov matrix</h2>
+<ul>
+<li><p>Typical element of correlation matrix P is <span class="math inline">\(\rho_{i,j} = \sigma_{i,j}^{2}/(\sigma_{i,i}\sigma_{j,j})\)</span></p>
+<ul>
+<li><span class="math inline">\(\sigma_{i,j}^2\)</span> is a typical element of the variance-covariance matrix, with <span class="math inline">\(\sigma_{i,j}^2=\rho_{i,j}\sigma_{i,i}\sigma_{j,j}\)</span></li>
+</ul></li>
+<li><p>Matrix algebra to convert correlation matrix and SDs to var-cov matrix</p></li>
+</ul>
+<p><span class="math display">\[
+\Sigma=\operatorname{diag}\left(\sigma_{1,1}, \cdots, \sigma_{k, k}\right) \mathrm{P} \operatorname{diag}\left(\sigma_{1,1}, \cdots, \sigma_{k, k}\right)
+\]</span></p>
+</section>
+<section id="motivation-for-being-able-to-deal-with-unstructured-mvn" class="slide level2">
+<h2>Motivation for being able to deal with unstructured MVN</h2>
+<ul>
+<li><p>You might actually want to assume some data are multivariate normal (e.g., some catch-at-age assessments assume log of catch-at-age MVN). But often we impose structure on correlations.</p></li>
+<li><p>You might want to allow different random effects to be correlated. E.g., we might expect the vonB function parameters for a pond will be either positively or negatively correlated with one another.</p></li>
+<li><p>Illustrate with another very simple example</p></li>
+</ul>
+</section>
+<section id="simple-application-of-unstructured-multivariate-normal" class="slide level2">
+<h2>Simple application of unstructured multivariate normal</h2>
+<ul>
+<li><p>We have a set of multivariate observations assumed to come from a multivariate normal distribution</p></li>
+<li><p>We estimate the mean vector and parameters that determine the variance-covariance matrix</p>
+<ul>
+<li><p>Illustrate how to estimate parameters on real number line that determine a “legal” correlation matrix</p></li>
+<li><p>Illustrate how to get the variance-covariance matrix from correlation matrix and vectors of standard deviations</p></li>
+<li><p>See “unstructured” example R script</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="correlated-random-effects-for-vonb-model" class="slide level2">
+<h2>Correlated random effects for vonB model</h2>
+<ul>
+<li><p>We have already seen how to make a vonB parameter a random effect. We could have made more than one parameter random at the same time using dnorm</p>
+<ul>
+<li>This assumes the random effects are independent but often that is not plausible [when fish ultimately get big (Linf) they might approach asymptotic size more slowly (K)].</li>
+</ul></li>
+<li><p>We can implement this by having the vonB parameters follow a multivariate normal distribution</p></li>
+<li><p>Larger and more realistic example data set, reparameterized the vonB (use L2 rather than t0)</p></li>
+</ul>
+</section>
+<section id="new-growth-data-set" class="slide level2">
+<h2>New growth data set</h2>
+<ul>
+<li><p>20 different ponds</p></li>
+<li><p>Each observation gives the pond ID and the length and age for an individual fish</p></li>
+</ul>
+</section>
+<section id="reparameterized-vonb" class="slide level2">
+<h2>Reparameterized vonB</h2>
+<ul>
+<li><p>This is not changing the underlying growth function, just how it is parameterized</p></li>
+<li><p>Standard parameterization has been criticized for t0 being hard to interpret and for correlation with other parameters</p></li>
+<li><p>Use L2 (length at age 2) instead. Chose age within range of observed data</p>
+<p><span class="math display">\[
+L_a=\widetilde{L}_{2}+\left(L_{\infty}-\widetilde{L}_{2}\right) \exp (-K(a-2))
+\]</span></p></li>
+</ul>
+</section>
+<section id="the-multivariate-random-effects-model" class="slide level2">
+<h2>The multivariate random effects model</h2>
+<p><span class="math display">\[
+\begin{array}{c}{\underline{\omega}_i = \left[\log L \infty_{i}, \log K_{i}, \log \widetilde{L 2}_{i}\right]^{T} \sim \\M V N\left(\left[\overline{\log L \infty_{i}}, \overline{\log K_{i}}, \overline{\log \widetilde{L 2}}\right]^{T}, \Sigma\right)} \\L_{i, j} \sim N\left(\operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right), \sigma_{L, i, j}^{2}\right) \\\sigma_{L, i, j}=\exp \left[\operatorname{int}+\operatorname{slp} * \operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right)\right] \operatorname{vonb}\left(\underline{\omega}_{i}, a_{i, j}\right)\end{array}
+\]</span></p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 

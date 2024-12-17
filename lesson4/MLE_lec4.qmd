@@ -4,9 +4,9 @@ title-slide-attributes:
     data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
     data-background-size: "40%"
     data-background-position: "6% 95%"
-subtitle: Lesson 4 - Basic random effects in RTMB <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-Software/lesson4/MLE_lec4.html){style="position:absolute;top:40%;left:35%;font-size:20px;"}
+subtitle: Lesson 4 - Basic random effects in RTMB <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-RTMB/lesson4/MLE_lec4.html){style="position:absolute;top:40%;left:35%;font-size:20px;"}
 author: Jim Bence
-date: 13 December 2024
+date: 16 December 2024
 date-format: "D MMMM YYYY"
 format: 
   revealjs:

@@ -4,9 +4,9 @@ title-slide-attributes:
     data-background-image: "https://qfcatmsu.github.io/Images/dark-big.png"  
     data-background-size: "40%"
     data-background-position: "6% 95%"
-subtitle: Lesson 3 - Controlling the search and assessing uncertainty <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-Software/lesson3/MLE_lec3.html){style="position:absolute;top:40%lesson1;left:35%;font-size:20px;"}
+subtitle: Lesson 3 - Controlling the search and assessing uncertainty <br> [Click here to view presentation online](https://qfcatmsu.github.io/MLE-RTMB/lesson3/MLE_lec3.html){style="position:absolute;top:40%lesson1;left:35%;font-size:20px;"}
 author: Jim Bence
-date: 12 December 2024
+date: 16 December 2024
 date-format: "D MMMM YYYY"
 format: 
   revealjs:
