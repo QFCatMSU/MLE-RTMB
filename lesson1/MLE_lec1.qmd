@@ -36,7 +36,7 @@ highlight-style: kate
 ## Syllabus
 
 -   Everything through Github
-    -   <https://github.com/QFCatMSU/MLE-Software/>
+    -   <https://github.com/QFCatMSU/MLE-RTMB/>
 -   Syllabus, presentations, code
 -   If you need help:
     -   [bence\@msu.edu](mailto:bence@msu.edu){.email}, [cahill11\@msu.edu](mailto:cahill11@msu.edu){.email}
