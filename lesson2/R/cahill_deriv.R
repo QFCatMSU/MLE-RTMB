@@ -10,7 +10,7 @@ f_double_prime(1)
 #-----------------------------------------------------------
 # Automatic differentiation
 library(RTMB)
-F <- MakeTape(f, numeric(1)) # two valued input
+F <- MakeTape(f, numeric(1)) # one valued input
 f_prime <- F$jacfun()
 f_prime(1)
 f_double_prime <- f_prime$jacfun()
