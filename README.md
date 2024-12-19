@@ -41,3 +41,7 @@ You will need to login with your MSU ID/ Guest Account
 
 <https://msu.zoom.us/s/93458228589>  
 The password is in an email sent to you
+
+## Link to RTMB translation of Thorson and Kristensen 2024
+
+<https://github.com/spacetime-ecologist/spacetime-ecologists-RTMB/tree/main>
