@@ -12,10 +12,10 @@ par <- list(logLinf = 7, logK = -1.6, t0 = 0, logsd = 4)
 
 f <- function(par) {
     getAll(dat, par)
+    lenobs <- OBS(lenobs) # New line!
     Linf <- exp(logLinf)
     K <- exp(logK)
     sd <- exp(logsd)
-    lenobs <- OBS(lenobs) # New line!
     lenpred <- Linf * (1 - exp(-K * (age - t0)))
     nll <- -sum(dnorm(lenobs, lenpred, sd, TRUE))
     atagepred <- Linf * (1 - exp(-K * ((1:11) - t0)))
@@ -42,7 +42,4 @@ dat <- odat
 
 # plot it
 boxplot(t(sim))
-points(1:length(opt$par), opt$par,
-    cex = 5,
-    pch = 4, lwd = 3, col = "darkgreen"
-)
+points(1:length(opt$par), opt$par, cex = 5, pch = 4, lwd = 3, col = "darkgreen")
