@@ -1,7 +1,6 @@
 # see thorson and kristensen 2024 chp 3
 
 library(RTMB)
-library(Matrix)
 
 #--------------------------------------------------------------------------------
 # read in data, manipulate for analysis
